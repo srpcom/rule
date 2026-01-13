@@ -3,209 +3,451 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G-Drive Cloner Pro</title>
+    <title>G-Drive Cloner Ultimate</title>
+    <!-- Font Keren -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Library SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Library tsParticles (Versi Terbaru) -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.0/tsparticles.bundle.min.js"></script>
+    
     <style>
         :root {
-            --primary: #4285F4;
-            --bg: #f8f9fa;
-            --card: #ffffff;
+            --primary: #00d2ff;
+            --secondary: #ff00de;
+            --glass-bg: rgba(20, 20, 30, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-color: #ffffff;
+            --input-bg: rgba(0, 0, 0, 0.3);
         }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
+            font-family: 'Poppins', sans-serif;
+            background: #0f0c29;
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            color: var(--text-color);
+            overflow-x: hidden;
+            position: relative;
         }
-        .container {
-            background: var(--card);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+        /* Container untuk background Particles */
+        #tsparticles {
+            position: absolute;
             width: 100%;
-            max-width: 480px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
         }
+
+        /* Kartu Glassmorphism */
+        .container {
+            position: relative;
+            z-index: 1;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 450px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         h1 {
-            color: #202124;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
             text-align: center;
+            /* Gradient Text Neon */
+            background: linear-gradient(to right, #00d2ff, #ff00de, #f4b400); 
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
         }
+
         p.subtitle {
             text-align: center;
-            color: #5f6368;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.9rem;
             margin-bottom: 2rem;
+            font-weight: 300;
         }
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
+
+        .form-group { margin-bottom: 1.5rem; }
+        
         label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: #5f6368;
-            font-size: 0.9rem;
+            margin-bottom: 0.6rem;
+            color: #d1d8e0;
+            font-size: 0.85rem;
             font-weight: 500;
+            letter-spacing: 0.5px;
         }
+
         input {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #dadce0;
-            border-radius: 4px;
+            padding: 12px 15px;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
             font-size: 1rem;
+            color: white;
             box-sizing: border-box;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
         }
+
+        input::placeholder { color: rgba(255, 255, 255, 0.4); }
+
         input:focus {
             outline: none;
+            background: rgba(255, 255, 255, 0.1);
             border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
         }
+
         button {
             width: 100%;
-            background-color: var(--primary);
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5, #ff00de);
+            background-size: 200% 200%;
+            animation: gradientAnim 3s ease infinite;
             color: white;
             border: none;
-            padding: 0.85rem;
-            border-radius: 4px;
+            padding: 14px;
+            border-radius: 10px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+
+        @keyframes gradientAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         button:hover {
-            background-color: #3367d6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 25px rgba(255, 0, 222, 0.4);
         }
+
         button:disabled {
-            background-color: #a0c2f9;
-            cursor: not-allowed;
+            background: #444;
+            color: #aaa;
+            cursor: wait;
+            transform: none;
+            box-shadow: none;
+            animation: none;
         }
-        #result {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            display: none;
-            word-wrap: break-word;
+
+        /* Progress Info Styles */
+        .progress-wrapper { margin-top: 20px; display: none; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: #b8c6db; margin-bottom: 5px; }
+        .progress-container { width: 100%; height: 8px; background-color: rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden; }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #f4b400, #ff00de, #00d2ff); border-radius: 10px; transition: width 0.4s ease; }
+        .progress-stats { 
+            margin-top: 10px; font-size: 0.8rem; color: #aaa; text-align: center; 
+            border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;
         }
-        #result a {
-            display: block;
-            margin-top: 5px;
-            color: #1a73e8;
-            text-decoration: none;
-            font-weight: 500;
+
+        /* SweetAlert Custom Popup Style Override */
+        div:where(.swal2-container) div:where(.swal2-popup) {
+            background: rgba(20, 20, 30, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
         }
-        #result a:hover {
-            text-decoration: underline;
-        }
-        .success { background: #e6f4ea; color: #137333; border: 1px solid #ceead6; }
-        .error { background: #fce8e6; color: #c5221f; border: 1px solid #fad2cf; }
-        
-        .hint {
-            font-size: 0.75rem;
-            color: #70757a;
-            margin-top: 0.25rem;
-        }
+        div:where(.swal2-container) .swal2-title { color: #fff !important; }
+        div:where(.swal2-container) .swal2-html-container { color: #ddd !important; }
     </style>
 </head>
 <body>
 
+<!-- Div untuk background tsParticles -->
+<div id="tsparticles"></div>
+
 <div class="container">
-    <h1>Drive Folder Copier</h1>
-    <p class="subtitle">Copy Folder Antar Akun + Auto Logging</p>
+    <h1>G-Drive Cloner Pro</h1>
+    <p class="subtitle">Secure Batch Processing System</p>
     
     <div class="form-group">
-        <label for="folderUrl">Link Folder Sumber (Akun A)</label>
-        <input type="text" id="folderUrl" placeholder="[https://drive.google.com/drive/folders/](https://drive.google.com/drive/folders/)..." required>
-        <div class="hint">Pastikan folder ini sudah di-share ke akun Anda.</div>
+        <label for="folderUrl">Link Folder Sumber</label>
+        <input type="text" id="folderUrl" placeholder="https://drive.google.com/drive/folders/..." required>
     </div>
 
     <div class="form-group">
-        <label for="folderName">Nama Folder Baru (Opsional)</label>
-        <input type="text" id="folderName" placeholder="Contoh: Backup Data Kantor">
+        <label for="folderName">Nama Folder Baru</label>
+        <input type="text" id="folderName" placeholder="Contoh: Backup 2024">
     </div>
 
-    <button id="submitBtn">Mulai Salin</button>
+    <button id="submitBtn">Mulai Proses Batch</button>
 
-    <div id="result"></div>
+    <div class="progress-wrapper" id="progressWrapper">
+        <div class="progress-label">
+            <span id="progressText">Menyiapkan...</span>
+            <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-stats" id="progressStats">
+            Menunggu inisialisasi...
+        </div>
+    </div>
 </div>
 
 <script>
     // ==========================================
-    // KONFIGURASI PENTING
+    // INITIALIZE tsParticles (THEME: MAIL FOCUS)
     // ==========================================
-    const SCRIPT_URL = "[https://script.google.com/macros/s/AKfycbxkfBX-FwSTcdPHyQnVzc9hX0-5COBHi5D0sAPnOCOV6elV0XuoZwdjO8_zGJcVOF9fcw/exec](https://script.google.com/macros/s/AKfycbxkfBX-FwSTcdPHyQnVzc9hX0-5COBHi5D0sAPnOCOV6elV0XuoZwdjO8_zGJcVOF9fcw/exec)"; 
+    tsParticles.load("tsparticles", {
+        fpsLimit: 60,
+        // 1. BACKGROUND PARTICLES (Ikon Biasa - Kecil & Transparan)
+        particles: {
+            number: {
+                value: 20, // Jumlah dikurangi agar tidak menyaingi surat
+                density: { enable: true, area: 800 }
+            },
+            shape: {
+                type: ["char", "circle"],
+                character: [
+                    { value: ["📂", "💾", "🚀", "✨", "☁️", "📄"], font: "Verdana", weight: "400" }
+                ]
+            },
+            color: {
+                value: ["#4285F4", "#DB4437", "#F4B400", "#0F9D58", "#ffffff"]
+            },
+            opacity: {
+                value: 0.4, // Lebih transparan (background)
+                random: true
+            },
+            size: {
+                value: { min: 10, max: 20 }, // Ukuran Kecil
+                random: true
+            },
+            move: {
+                enable: true,
+                speed: 1.5,
+                direction: "none",
+                random: true,
+                straight: false,
+                outModes: { default: "out" },
+                attract: { enable: false, rotateX: 600, rotateY: 1200 }
+            },
+            links: {
+                enable: true,
+                distance: 150,
+                color: "#ffffff",
+                opacity: 0.1,
+                width: 1
+            }
+        },
+        
+        // 2. EMITTERS (FOKUS UTAMA: SURAT RAKSASA)
+        emitters: {
+            direction: "none",
+            life: {
+                count: 0, // Infinite (terus menerus)
+                duration: 0.1,
+                delay: 0.1
+            },
+            rate: {
+                delay: 2.5, // Muncul setiap 2.5 detik
+                quantity: 1
+            },
+            size: {
+                width: 100,
+                height: 100,
+                mode: "percent"
+            },
+            position: {
+                x: 50,
+                y: 50
+            },
+            particles: {
+                // Konfigurasi KHUSUS untuk Surat
+                shape: {
+                    type: "char",
+                    character: { value: ["✉️", "📧", "📨"], font: "Verdana", weight: "400" }
+                },
+                size: { 
+                    value: { min: 70, max: 100 } // UKURAN JUMBO (Sangat Besar)
+                },
+                opacity: { value: 1 }, // Solid/Jelas
+                move: {
+                    enable: true,
+                    speed: 0.8, // Melayang santai
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    outModes: { default: "destroy" } // Hapus saat keluar layar agar tidak menumpuk
+                },
+                rotate: {
+                    value: { min: 0, max: 360 },
+                    animation: { enable: true, speed: 2, sync: false }
+                },
+                links: { enable: false } // Tanpa garis penghubung agar bersih
+            }
+        },
+
+        interactivity: {
+            detectsOn: "canvas",
+            events: {
+                onHover: { enable: true, mode: "repulse" },
+                onClick: { enable: true, mode: "push" },
+                resize: true
+            },
+            modes: {
+                repulse: { distance: 100, duration: 0.4 },
+                push: { quantity: 4 }
+            }
+        },
+        detectRetina: true
+    });
+
     // ==========================================
+    // LOGIKA BATCH PROCESSING (SAMA SEPERTI SEBELUMNYA)
+    // ==========================================
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwzMhTT8zwLTV26UtM0T2nd8tsp9U8xjoFNGHp1h-xJ30ZZwjVORtEBiqXe8laV7MhDcg/exec"; 
 
     const submitBtn = document.getElementById('submitBtn');
-    const resultDiv = document.getElementById('result');
+    const progressWrapper = document.getElementById('progressWrapper');
+    const progressBar = document.getElementById('progressBar');
+    const progressPercent = document.getElementById('progressPercent');
+    const progressText = document.getElementById('progressText');
+    const progressStats = document.getElementById('progressStats');
 
     submitBtn.addEventListener('click', async () => {
         const folderUrl = document.getElementById('folderUrl').value.trim();
         const folderName = document.getElementById('folderName').value.trim();
 
         if (!folderUrl) {
-            showResult('Harap isi Link Folder Sumber.', 'error');
+            Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Harap isi Link Folder Sumber!', confirmButtonColor: '#ff00de' });
             return;
         }
 
-        setLoading(true);
-
-        const payload = {
-            url: folderUrl,
-            name: folderName
-        };
-
+        setUIState('init');
+        
         try {
-            const response = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify(payload),
-                headers: {
-                    'Content-Type': 'text/plain;charset=utf-8',
-                },
+            // Step 1: Initialize (Scan)
+            const initResponse = await sendRequest({ 
+                action: 'initialize', 
+                url: folderUrl, 
+                name: folderName 
             });
 
-            const data = await response.json();
+            if (initResponse.status !== 'success') throw new Error(initResponse.message);
 
-            if (data.status === 'success') {
-                let msg = `<strong>✅ ${data.message}</strong><br>`;
-                
-                if (data.details) {
-                    msg += `<div style="margin-top:10px; padding-top:10px; border-top:1px solid #ccc;">`;
-                    msg += `<a href="${data.details.folderUrl}" target="_blank">📂 Buka Folder Hasil</a>`;
-                    msg += `<a href="${data.details.sheetUrl}" target="_blank">📊 Buka Log Spreadsheet</a>`;
-                    msg += `</div>`;
+            const jobId = initResponse.jobId;
+            const totalFiles = initResponse.totalFiles;
+            
+            updateProgress(0, `Ditemukan ${totalFiles} file. Memulai copy...`);
+
+            // Step 2: Loop Batch Process
+            let isComplete = false;
+            
+            while (!isComplete) {
+                const batchResponse = await sendRequest({ 
+                    action: 'process_batch', 
+                    jobId: jobId 
+                });
+
+                if (batchResponse.status !== 'success') throw new Error(batchResponse.message);
+
+                // Update UI Realtime
+                const prog = batchResponse.progress;
+                updateProgress(prog.percent, `Memproses: ${prog.processed} / ${prog.total} File`);
+                progressStats.innerHTML = `Ukuran: <b>${prog.currentSize}</b> dari <b>${prog.totalSize}</b>`;
+
+                if (batchResponse.action === 'complete') {
+                    isComplete = true;
+                    showSuccessModal(batchResponse, prog);
                 }
-                showResult(msg, 'success');
-            } else {
-                showResult(`❌ ${data.message}`, 'error');
             }
 
         } catch (error) {
             console.error(error);
-            showResult('Terjadi kesalahan jaringan/CORS. Pastikan script dideploy sebagai "Anyone".', 'error');
+            Swal.fire({ icon: 'error', title: 'Terjadi Kesalahan', text: error.message, background: '#1e2832', color: '#fff' });
         } finally {
-            setLoading(false);
+            setUIState('idle');
         }
     });
 
-    function setLoading(isLoading) {
-        if (isLoading) {
+    async function sendRequest(payload) {
+        const response = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        });
+        return await response.json();
+    }
+
+    function setUIState(state) {
+        if (state === 'init') {
             submitBtn.disabled = true;
-            submitBtn.textContent = "Sedang Menyalin (Mohon Tunggu)...";
-            resultDiv.style.display = 'none';
-        } else {
+            submitBtn.textContent = "Scanning Folder (Mohon Tunggu)...";
+            progressWrapper.style.display = 'block';
+            progressStats.textContent = "Sedang memindai struktur folder...";
+            updateProgress(0, "Inisialisasi...");
+        } else if (state === 'idle') {
             submitBtn.disabled = false;
-            submitBtn.textContent = "Mulai Salin";
+            submitBtn.textContent = "Mulai Proses Batch";
         }
     }
 
-    function showResult(msg, type) {
-        resultDiv.style.display = 'block';
-        resultDiv.className = type;
-        resultDiv.innerHTML = msg;
+    function updateProgress(percent, text) {
+        progressBar.style.width = percent + "%";
+        progressPercent.textContent = percent + "%";
+        progressText.textContent = text;
+    }
+
+    function showSuccessModal(data, stats) {
+        let htmlContent = `<div style="text-align: left; margin-top: 10px;">`;
+        htmlContent += `<p>✅ Proses Selesai!</p>`;
+        htmlContent += `<ul style="margin: 10px 0; color:#ddd; padding-left:20px;">`;
+        htmlContent += `<li>Total File: <b>${stats.processed}</b></li>`;
+        htmlContent += `<li>Total Ukuran: <b>${stats.totalSize}</b></li>`;
+        htmlContent += `</ul>`;
+        
+        if (data.details) {
+            htmlContent += `<div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">`;
+            htmlContent += `<a href="${data.details.folderUrl}" target="_blank" style="padding:12px; background:rgba(0, 210, 255, 0.1); border-radius:8px; text-decoration:none; color:#00d2ff; border:1px solid #00d2ff; text-align:center; font-weight:bold;">📂 Buka Folder Hasil</a>`;
+            htmlContent += `<a href="${data.details.sheetUrl}" target="_blank" style="padding:12px; background:rgba(46, 213, 115, 0.1); border-radius:8px; text-decoration:none; color:#2ed573; border:1px solid #2ed573; text-align:center; font-weight:bold;">📊 Buka Log Spreadsheet</a>`;
+            htmlContent += `</div>`;
+        }
+        htmlContent += `</div>`;
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Clone Selesai!',
+            html: htmlContent,
+            background: '#111116',
+            color: '#fff',
+            confirmButtonText: 'Mantap!',
+            confirmButtonColor: '#ff00de'
+        });
     }
 </script>
 
